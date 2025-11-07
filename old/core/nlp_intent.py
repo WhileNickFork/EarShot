@@ -1,5 +1,5 @@
 import os, numpy as np, logging, onnxruntime as ort
-from typing import List, Dict, Tuple, Optional
+from typing import List, Dict, Tuple
 from transformers import AutoTokenizer
 log = logging.getLogger("intent")
 
@@ -49,7 +49,7 @@ class MiniLMEmbedder:
         return out.astype(np.float32)
 
 class IntentClassifier:
-    def __init__(self, model_dir: str, threshold: float = 0.28, protos: Optional[Dict[str, List[str]]] = None):
+    def __init__(self, model_dir: str, threshold: float = 0.28, protos: Dict[str, List[str]]|None=None):
         self.emb = MiniLMEmbedder(model_dir)
         self.protos = protos or _DEFAULT_PROTOS
         self.threshold = threshold
