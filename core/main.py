@@ -1,14 +1,14 @@
 import asyncio, logging, os
 from dotenv import load_dotenv
-from .config import Cfg
-from .logging_setup import setup_logger
-from .audio import AudioCapture
-from .vad import VADGate
-from .asr import ASRWorker
-from .intent import IntentRouter
-from .events import EventProcessor
+from config import Cfg
+from logging_setup import setup_logger
+from audio import AudioCapture
+from vad import VADGate
+from asr import ASRWorker
+from intent import IntentRouter
+from events import EventProcessor
 from location.gps_tachyon import TachyonGPS
-from .display import Display
+from display import Display
 from http.server import HTTPServer, BaseHTTPRequestHandler
 import threading, json, time
 
