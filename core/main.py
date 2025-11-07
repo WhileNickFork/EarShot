@@ -7,7 +7,7 @@ from vad import VADGate
 from asr import ASRWorker
 from intent import IntentRouter
 from events import EventProcessor
-from location.gps_tachyon import TachyonGPS
+from location import gps_tachyon
 from display import Display
 from http.server import HTTPServer, BaseHTTPRequestHandler
 import threading, json, time
@@ -37,7 +37,7 @@ async def main():
     asr_q = asyncio.Queue(maxsize=16)
     event_q = asyncio.Queue(maxsize=8)
 
-    gps = TachyonGPS(simulation=cfg.simulation_mode)
+    gps = gps_tachyon.TachyonGPS(simulation=cfg.simulation_mode)
     display = Display(cfg)
 
     ac = AudioCapture(cfg, frame_q)
