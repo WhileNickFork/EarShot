@@ -1,0 +1,49 @@
+services:
+  earshot:
+    build: ./app
+    container_name: tachyon-earshot
+    restart: always
+    privileged: true  # required for SPI/GPIO/sound on Tachyon
+    env_file: ./.env
+    environment:
+      # E-ink display GPIO configuration (gpiod direct)
+      - EPD_SPI_DEV=/dev/spidev0.0
+      - EPD_DC_CHIP=/dev/gpiochip0
+      - EPD_DC_LINE=60
+      - EPD_RST_CHIP=/dev/gpiochip0
+      - EPD_RST_LINE=61
+      - EPD_BUSY_CHIP=/dev/gpiochip0
+      - EPD_BUSY_LINE=62
+      - EPD_SPI_HZ=4000000
+    devices:
+      - /dev/snd:/dev/snd                   # USB microphone
+      - /dev/spidev0.0:/dev/spidev0.0       # SPI for e-ink display (CE0)
+      - /dev/spidev0.1:/dev/spidev0.1       # SPI for e-ink display (CE1)
+      - /dev/gpiochip0:/dev/gpiochip0       # GPIO chip 0
+      - /dev/gpiochip1:/dev/gpiochip1       # GPIO chip 1
+      - /dev/gpiochip2:/dev/gpiochip2       # GPIO chip 2
+      - /dev/gpiochip3:/dev/gpiochip3       # GPIO chip 3
+      - /dev/gpiochip4:/dev/gpiochip4       # GPIO chip 4
+      - /dev/gpiochip5:/dev/gpiochip5       # GPIO chip 5
+      - /dev:/dev                           # mirror device tree (for GNSS paths)
+    volumes:
+      - app_data:/opt/appdata               # minimal summaries JSONL
+      - vosk_models:/opt/vosk_models        # ASR cache
+      - logs:/opt/logs                      # persistent logs (outside container)
+      - ./models:/opt/models:ro             # ONNX models (Silero + MiniLM)
+      - ./overrides/epdif.py:/usr/local/lib/python3.11/site-packages/epd7in5/epdif.py:ro  # gpiod epdif override
+      - /usr/bin/particle-tachyon-ril-ctl:/usr/bin/particle-tachyon-ril-ctl:ro
+      - /sys:/sys:ro
+      - /run/dbus:/run/dbus:ro
+    network_mode: host  # Use host network to access host's ollama service
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8088/health', timeout=2)"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+volumes:
+  app_data:
+  vosk_models:
+  logs:

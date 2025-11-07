@@ -1,0 +1,3 @@
+adafruit-blinka==8.66.2
+adafruit-circuitpython-epd==2.16.0
+pillow==10.4.0
