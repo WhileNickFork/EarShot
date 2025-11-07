@@ -1,7 +1,7 @@
 import asyncio, json, time, logging
 from pathlib import Path
-from .llm import LLM
-from .config import Cfg
+from llm import LLM
+from config import Cfg
 try:
     from tasks.ticktick import TickTick
 except ImportError:  # pragma: no cover - optional dependency

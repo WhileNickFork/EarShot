@@ -1,5 +1,5 @@
 import asyncio, httpx
-from .config import Cfg
+from config import Cfg
 
 SYSTEMS = {
  "memory_summarize": "Summarize the note into one short sentence, first-person neutral, no fluff.",
