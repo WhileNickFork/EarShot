@@ -1,6 +1,6 @@
 import asyncio, numpy as np, onnxruntime as ort, time, logging
 import os, webrtcvad
-from .config import Cfg
+from config import Cfg
 log = logging.getLogger("vad")
 
 class VADGate:
