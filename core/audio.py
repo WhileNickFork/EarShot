@@ -1,5 +1,5 @@
 import asyncio, sounddevice as sd, numpy as np, logging
-from config import Cfg
+from core.config import Cfg
 log = logging.getLogger("audio")
 
 class AudioCapture:

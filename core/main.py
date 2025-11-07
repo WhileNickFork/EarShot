@@ -1,14 +1,14 @@
 import asyncio, logging, os
 from dotenv import load_dotenv
-from config import Cfg
-from logging_setup import setup_logger
-from audio import AudioCapture
-from vad import VADGate
-from asr import ASRWorker
-from intent import IntentRouter
-from events import EventProcessor
-from location import gps_tachyon
-from display import Display
+from core.config import Cfg
+from core.logging_setup import setup_logger
+from core.audio import AudioCapture
+from core.vad import VADGate
+from core.asr import ASRWorker
+from core.intent import IntentRouter
+from core.events import EventProcessor
+from location.gps_tachyon import TachyonGPS
+from core.display import Display
 from http.server import HTTPServer, BaseHTTPRequestHandler
 import threading, json, time
 
@@ -37,7 +37,7 @@ async def main():
     asr_q = asyncio.Queue(maxsize=16)
     event_q = asyncio.Queue(maxsize=8)
 
-    gps = gps_tachyon.TachyonGPS(simulation=cfg.simulation_mode)
+    gps = TachyonGPS(simulation=cfg.simulation_mode)
     display = Display(cfg)
 
     ac = AudioCapture(cfg, frame_q)

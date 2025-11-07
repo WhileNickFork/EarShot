@@ -1,7 +1,7 @@
 import asyncio, time, logging
-from rolling import RollingBuffer
-from config import Cfg
-from nlp_intent import IntentClassifier
+from core.rolling import RollingBuffer
+from core.config import Cfg
+from core.nlp_intent import IntentClassifier
 log = logging.getLogger("router")
 
 class IntentRouter:

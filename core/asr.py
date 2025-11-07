@@ -1,5 +1,5 @@
 import asyncio, vosk, json, numpy as np, os, logging, pathlib, zipfile, tempfile, shutil, urllib.request
-from config import Cfg
+from core.config import Cfg
 log = logging.getLogger("asr")
 
 def ensure_vosk_model(cache_dir: str, model_name: str)->str:
